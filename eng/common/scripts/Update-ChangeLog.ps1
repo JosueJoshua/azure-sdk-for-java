@@ -9,9 +9,7 @@ param (
   [Parameter(Mandatory = $true)]
   [String]$Version,
   [Parameter(Mandatory = $true)]
-  [String]$ServiceDirectory,
-  [Parameter(Mandatory = $true)]
-  [String]$PackageName,
+  [String]$PackageOrArtifactName,
   [Boolean]$Unreleased = $true,
   [Boolean]$ReplaceLatestEntryTitle = $false,
   [String]$ReleaseDate
@@ -51,7 +49,8 @@ if ($null -eq [AzureEngSemanticVersion]::ParseVersionString($Version))
     exit 1
 }
 
-$PkgProperties = Get-PkgProperties -PackageName $PackageName -ServiceDirectory $ServiceDirectory
+$PkgProperties = Get-PkgProperties -PackageOrArtifactName $PackageOrArtifactName
+
 $ChangeLogEntries = Get-ChangeLogEntries -ChangeLogLocation $PkgProperties.ChangeLogPath
 
 

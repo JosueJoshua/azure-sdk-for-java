@@ -2,8 +2,7 @@
 param (
   [String]$ChangeLogLocation,
   [String]$VersionString,
-  [string]$PackageName,
-  [string]$ServiceDirectory,
+  [string]$ArtifactName,
   [boolean]$ForRelease = $False
 )
 
@@ -16,7 +15,7 @@ if ($ChangeLogLocation -and $VersionString)
 }
 else
 {
-  $PackageProp = Get-PkgProperties -PackageName $PackageName -ServiceDirectory $ServiceDirectory
+  $PackageProp = Get-PkgProperties -PackageOrArtifactName $ArtifactName
   $validChangeLog = Confirm-ChangeLogEntry -ChangeLogLocation $PackageProp.ChangeLogPath -VersionString $PackageProp.Version -ForRelease $ForRelease
 }
 
