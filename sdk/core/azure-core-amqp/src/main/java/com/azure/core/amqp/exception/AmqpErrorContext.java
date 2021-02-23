@@ -5,10 +5,13 @@ package com.azure.core.amqp.exception;
 import com.azure.core.amqp.AmqpConnection;
 import com.azure.core.amqp.AmqpLink;
 import com.azure.core.amqp.AmqpSession;
+import com.azure.core.annotation.Fluent;
 import com.azure.core.util.CoreUtils;
 
 import java.io.Serializable;
+import java.util.Collections;
 import java.util.Locale;
+import java.util.Map;
 
 /**
  * Provides context for an {@link AmqpException} that occurs in an {@link AmqpConnection}, {@link AmqpSession},
@@ -18,12 +21,14 @@ import java.util.Locale;
  * @see SessionErrorContext
  * @see LinkErrorContext
  */
+@Fluent
 public class AmqpErrorContext implements Serializable {
     static final String MESSAGE_PARAMETER_DELIMITER = ", ";
 
     private static final long serialVersionUID = -2819764407122954922L;
 
     private final String namespace;
+    private Map<String, Object> errorInfo;
 
     /**
      * Creates a new instance with the provided {@code namespace}.
@@ -46,6 +51,26 @@ public class AmqpErrorContext implements Serializable {
      */
     public String getNamespace() {
         return namespace;
+    }
+
+    /**
+     * Gets the map carrying information about the error condition.
+     *
+     * @return Map carrying additional information about the error.
+     */
+    public Map<String, Object> getErrorInfo() {
+        return errorInfo != null ? errorInfo : Collections.emptyMap();
+    }
+
+    /**
+     * Sets map carrying information about the error condition.
+     *
+     * @param errorInfo Map carrying additional information about the error.
+     * @return The updated {@link AmqpErrorContext} context.
+     */
+    public AmqpErrorContext setErrorInfo(Map<String, Object> errorInfo) {
+        this.errorInfo = errorInfo;
+        return this;
     }
 
     /**
